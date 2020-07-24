@@ -7,13 +7,6 @@ const connect = mongoose.connect(url, {
   useUnifiedTopology:true
 });
 
-connect.then(
-  db => {
-    console.log(
-      "Connected to mongodb server at port 27017 with db name foodEx"
-    );
-  },
-  err => {
-    console.log(err);
-  }
+connect.then(db => console.log("Connected to database...")
+        .catch(err=>console.error(err))
 );
