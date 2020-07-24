@@ -7,6 +7,13 @@ const connect = mongoose.connect(url, {
   useUnifiedTopology:true
 });
 
-connect.then(db => console.log("Connected to database...")
-        .catch(err=>console.error(err))
+connect.then(
+db => {
+    console.log(
+      "Connected to database..."
+    );
+  },
+  err => {
+    console.log(err);
+  }
 );
