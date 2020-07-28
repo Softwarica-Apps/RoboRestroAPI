@@ -3,35 +3,32 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    phone: {
-      type: String
+    table: {
+      type: String,
     },
     food_name: {
-      type: String
+      type: String,
     },
     food_quantity: {
-      type: String
+      type: String,
     },
     food_price: {
-      type: String
+      type: String,
     },
     date: {
-      type: Date
+      type: Date,
     },
     status: {
-      type: String
+      type: String,
     },
     food_imagename: {
-      type: String
+      type: String,
     },
-    payment_type: {
-      type:String
-    }
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("order", orderSchema);
 module.exports = Order;

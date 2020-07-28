@@ -3,16 +3,15 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const auth = require("../middleware/auth");
 
 const storage = multer.diskStorage({
-  destination: function(req, res, cb) {
+  destination: function (req, res, cb) {
     cb(null, "./images");
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     let ext = path.extname(file.originalname);
     cb(null, "food" + Date.now() + file.originalname);
-  }
+  },
 });
 
 const fileFilter = (req, file, cb) => {
@@ -27,12 +26,12 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 10 //10MB
+    fileSize: 1024 * 1024 * 10, //10MB
   },
-  fileFilter: fileFilter
+  fileFilter: fileFilter,
 });
 
-const Food = require("../models/foods");
+const Food = require("../models/food");
 
 //route for adding courses
 router.post("/addFood", upload.single("food_image"), (req, res) => {
@@ -44,99 +43,99 @@ router.post("/addFood", upload.single("food_image"), (req, res) => {
     food_description: req.body.food_description,
     food_imagename: req.file.path,
     food_rating: "",
-    food_offer: req.body.food_offer
+    food_offer: req.body.food_offer,
   });
   food
     .save()
-    .then(result => {
+    .then((result) => {
       res.status(201).json({
-        message: "Food Added Successfully"
+        message: "Food Added Successfully",
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        message: err
+        message: err,
       });
     });
 });
 
 //route for getting all food
-router.get("/food", function(req, res) {
+router.get("/food", function (req, res) {
   Food.find()
     .sort({ createdAt: -1 }) //sort in descending order
     .exec()
-    .then(function(food) {
+    .then(function (food) {
       res.send(food);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for getting new foods
-router.get("/newfood", function(req, res) {
+router.get("/newfood", function (req, res) {
   Food.find()
     .sort({ createdAt: -1 }) //sort in descending order
     .limit(4)
     .exec()
-    .then(function(food) {
+    .then(function (food) {
       res.send(food);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for getting foods with offer
-router.get("/offerfood", function(req, res) {
+router.get("/offerfood", function (req, res) {
   var text = "Yes";
   Food.find({ food_offer: text })
     .sort({ createdAt: -1 }) //sort in descending order
     .exec()
-    .then(function(food) {
+    .then(function (food) {
       res.send(food);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for getting foods with offer
-router.get("/food/:food_category", function(req, res) {
+router.get("/food/:food_category", function (req, res) {
   Food.find({ food_category: req.params.food_category })
     .sort({ createdAt: -1 }) //sort in descending order
     .exec()
-    .then(function(food) {
+    .then(function (food) {
       res.send(food);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for getting course by id
-router.get("/:id", function(req, res) {
+router.get("/:id", function (req, res) {
   Food.findById(req.params.id)
 
-    .then(function(food) {
+    .then(function (food) {
       res.send(food);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for updating food
-router.put("/updateFood/:id", upload.single("food_image"), async function(
+router.put("/updateFood/:id", upload.single("food_image"), async function (
   req,
   res
 ) {
   id = req.params.id.toString();
   if (req.file.path != null) {
-    Food.findById(id).then(food => {
+    Food.findById(id).then((food) => {
       let path = food.food_imagename;
-      fs.unlink(path, err => {
+      fs.unlink(path, (err) => {
         if (err) console.log(err);
       });
     });
@@ -153,36 +152,36 @@ router.put("/updateFood/:id", upload.single("food_image"), async function(
         food_description: req.body.food_description,
         food_imagename: req.file.path,
         food_rating: "",
-        food_offer: req.body.food_offer
-      }
+        food_offer: req.body.food_offer,
+      },
     }
   )
-    .then(function(food) {
+    .then(function (food) {
       res.status(201).json({
-        message: "Food Updated Successfully"
+        message: "Food Updated Successfully",
       });
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
       console.log(e);
     });
 });
 
 //route for deleting course
-router.delete("/deleteFood/:id", auth, (req, res) => {
-  Food.findById(req.params.id).then(food => {
+router.delete("/deleteFood/:id", (req, res) => {
+  Food.findById(req.params.id).then((food) => {
     let path = food.food_imagename;
-    fs.unlink(path, err => {
+    fs.unlink(path, (err) => {
       if (err) console.log(err);
     });
     food
       .delete()
-      .then(function(result) {
+      .then(function (result) {
         res.status(201).json({
-          message: "Food Deleted Successfully"
+          message: "Food Deleted Successfully",
         });
       })
-      .catch(function(e) {
+      .catch(function (e) {
         console.log(e);
       });
   });

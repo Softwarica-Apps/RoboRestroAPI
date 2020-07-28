@@ -8,10 +8,10 @@ const User = require("../models/users");
 router.post("/register", (req, res) => {
   User.find({ phone: req.body.phone })
     .exec()
-    .then(user => {
+    .then((user) => {
       if (user.length >= 1) {
         res.status(201).json({
-          message_error: "Phone Number already exists"
+          message_error: "Phone Number already exists",
         });
       } else {
         const user = new User({
@@ -20,37 +20,37 @@ router.post("/register", (req, res) => {
           phone: req.body.phone,
           email: req.body.email,
           password: req.body.password,
-          usertype: "user"
+          usertype: "user",
         });
         user
           .save()
-          .then(result => {
+          .then((result) => {
             res.status(201).json({
-              message_success: "Register Successful"
+              message_success: "Register Successful",
             });
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             res.status(500).json({
-              message: err
+              message: err,
             });
           });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
-        message: err
+        message: err,
       });
     });
 });
 
 //route for getting users details after login
-router.get("/me", auth, function(req, res) {
+router.get("/me", auth, function (req, res) {
   res.send(req.user);
 });
 
 //route for user login
-router.post("/login", async function(req, res) {
+router.post("/login", async function (req, res) {
   try {
     const user = await User.checkCrediantialsDb(
       req.body.phone,
@@ -68,11 +68,11 @@ router.post("/login", async function(req, res) {
         email: user.email,
         phone: user.phone,
         password: user.password,
-        usertype: user.usertype
+        usertype: user.usertype,
       });
     } else {
       res.json({
-        message: "Invalid"
+        message: "Invalid",
       });
     }
   } catch (e) {
@@ -86,7 +86,7 @@ router.post("/logout", auth, async (req, res) => {
     req.user.tokens = [];
     await req.user.save();
     res.status("201").json({
-      message: "Success"
+      message: "Success",
     });
   } catch (e) {
     res.status(500).send();
@@ -94,7 +94,7 @@ router.post("/logout", auth, async (req, res) => {
 });
 
 //route for updatinng user in Android
-router.put("/updateUser/:id", function(req, res) {
+router.put("/updateUser/:id", function (req, res) {
   uid = req.params.id;
   User.update(
     { _id: uid },
@@ -104,18 +104,18 @@ router.put("/updateUser/:id", function(req, res) {
         lastname: req.body.lastname,
         phone: req.body.phone,
         email: req.body.email,
-        password: req.body.password
-      }
+        password: req.body.password,
+      },
     }
   )
-    .then(function(user) {
+    .then(function (user) {
       res.status(201).json({
-        message: "User Details Updated Successfully"
+        message: "User Details Updated Successfully",
       });
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.status(422).json({
-        message: "Unable to Update:" + e
+        message: "Unable to Update:" + e,
       });
     });
 });

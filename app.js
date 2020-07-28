@@ -5,16 +5,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("./dbHelper/mongoose");
 
 const userRoute = require("./routes/users");
-const feedbackRoute = require("./routes/feedbacks");
 const foodRoute = require("./routes/foods");
 const foodTypeRoute = require("./routes/foodtypes");
 const foodCategoryRoute = require("./routes/foodcategories");
-const cartRoute = require("./routes/cart");
-const ratingRoute = require("./routes/rating");
+const basketRoute = require("./routes/basket");
 const orderRoute = require("./routes/orders");
-const bookRoute = require("./routes/books");
-const restaurantRoute = require("./routes/restaurants");
-const bookOrderRoute = require("./routes/bookorders");
 
 app.use(morgan("dev"));
 app.use("/images", express.static("images"));
@@ -39,16 +34,11 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", userRoute);
-app.use("/feedbacks", feedbackRoute);
 app.use("/foods", foodRoute);
 app.use("/foodcategories", foodCategoryRoute);
 app.use("/foodtypes", foodTypeRoute);
-app.use("/carts", cartRoute);
-app.use("/ratings", ratingRoute);
+app.use("/baskets", basketRoute);
 app.use("/orders", orderRoute);
-app.use("/books", bookRoute);
-app.use("/restaurants", restaurantRoute);
-app.use("/bookorders", bookOrderRoute);
 
 //error handling
 app.use((req, res, next) => {
@@ -61,8 +51,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 

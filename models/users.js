@@ -5,36 +5,36 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema(
   {
     first_name: {
-      type: String
+      type: String,
       //required: true
     },
     last_name: {
-      type: String
+      type: String,
       //required: true
     },
     phone: {
-      type: String
+      type: String,
     },
     email: {
-      type: String
+      type: String,
     },
     password: {
-      type: String
+      type: String,
     },
     usertype: {
-      type: String
+      type: String,
     },
     tokens: [
       {
         token: {
           type: String,
-          required: true
-        }
-      }
-    ]
+          required: true,
+        },
+      },
+    ],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
@@ -45,10 +45,9 @@ userSchema.statics.checkCrediantialsDb = async (phone, password) => {
   }
 };
 
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "foodex", {
-  });
+  const token = jwt.sign({ _id: user._id.toString() }, "foodex", {});
   console.log(token);
   user.tokens = user.tokens.concat({ token: token });
   await user.save();

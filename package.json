@@ -4,7 +4,8 @@
   "description": "API for RoboRestro android app",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start":"nodemon server.js"
   },
   "author": "Softwarica",
   "license": "ISC",
@@ -14,7 +15,6 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.25",
@@ -22,8 +22,5 @@
     "multer": "^1.4.2",
     "nodemon": "^1.19.2",
     "router": "^1.3.3"
-  },
-  "devDependencies": {
-    "cucumber": "^5.1.0"
   }
 }

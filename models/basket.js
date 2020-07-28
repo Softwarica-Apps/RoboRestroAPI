@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const cartSchema = new Schema(
+const basketSchema = new Schema(
   {
-    phone: {
+    table: {
       type: String
     },
     food_name: {
@@ -24,5 +24,5 @@ const cartSchema = new Schema(
   }
 );
 
-const Cart = mongoose.model("Cart", cartSchema);
-module.exports = Cart;
+const Basket = mongoose.model("basket", basketSchema);
+module.exports = Basket;

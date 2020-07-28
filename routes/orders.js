@@ -1,32 +1,30 @@
 const moment = require("moment");
 const express = require("express");
 const router = express.Router();
-const Order = require("../models/orders");
-const auth = require("../middleware/auth");
+const Order = require("../models/order");
 
 //route for adding order
 router.post("/", (req, res) => {
   const order = new Order({
-    phone: req.body.phone,
+    table: req.body.table,
     food_name: req.body.food_name,
     food_quantity: req.body.food_quantity,
     food_price: req.body.food_price,
     food_imagename: req.body.food_imagename,
-    payment_type: req.body.payment_type,
     date: moment(),
-    status: "InTransit"
+    status: "InTransit",
   });
   order
     .save()
-    .then(result => {
+    .then((result) => {
       res.status(201).json({
-        message: "Order Success"
+        message: "Order placed successfully",
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        message: err
+        message: err,
       });
     });
 });
@@ -34,52 +32,52 @@ router.post("/", (req, res) => {
 //route for adding order
 router.post("/multiple", (req, res) => {
   const order = new Order({
-    phone: req.body.phone,
+    table: req.body.table,
     food_name: req.body.food_name,
     food_quantity: req.body.food_quantity,
     food_price: req.body.food_price,
     food_imagename: req.body.food_imagename,
     date: moment(),
-    status: "InTransit"
+    status: "InTransit",
   });
   order
     .save()
-    .then(result => {
+    .then((result) => {
       res.status(201).json({
-        message: "Order Success"
+        message: "Order placed successfully",
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        message: err
+        message: err,
       });
     });
 });
 //route for getting all orders
-router.get("/", function(req, res) {
+router.get("/", function (req, res) {
   Order.find({})
     .sort({ createdAt: -1 }) //sort in descending order
     //.populate("u_id")
     .exec()
-    .then(function(order) {
+    .then(function (order) {
       res.send(order);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });
 
 //route for getting all orders of particular user
-router.get("/:phone", function(req, res) {
-  Order.find({phone:req.params.phone})
+router.get("/:table", function (req, res) {
+  Order.find({ table: req.params.table })
     .sort({ createdAt: -1 }) //sort in descending order
     //.populate("u_id")
     .exec()
-    .then(function(order) {
+    .then(function (order) {
       res.send(order);
     })
-    .catch(function(e) {
+    .catch(function (e) {
       res.send(e);
     });
 });

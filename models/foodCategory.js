@@ -4,16 +4,16 @@ const Schema = mongoose.Schema;
 const foodCategorySchema = new Schema(
   {
     food_category: {
-      type: String
+      type: String,
     },
     food_category_imagename: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const Foodcategory = mongoose.model("Foodcategory", foodCategorySchema);
+const Foodcategory = mongoose.model("food_category", foodCategorySchema);
 module.exports = Foodcategory;
