@@ -61,12 +61,68 @@ router.get("/", function (req, res) {
     //.populate("u_id")
     .exec()
     .then(function (order) {
-      res.send(order);
+      
+      console.log(order);
+
+      var tableArrKeyHolder = [];
+      var tableArr = [];
+      order.forEach(function(item){
+          tableArrKeyHolder[item.table] = tableArrKeyHolder[item.table]||{};
+          var obj = tableArrKeyHolder[item.table];
+          if(Object.keys(obj).length == 0)
+          tableArr.push(obj);
+          
+          obj.table = item.table;
+          obj.items  = obj.items || [];
+          
+          obj.items.push({
+            food_name:item.food_name, 
+            food_quantity: item.food_quantity,
+            food_price:item.food_price,
+            date:item.date,
+            status:item.status,
+            food_imagename:item.food_imagename
+          });
+      });
+
+      console.log(tableArr);
+      res.send(tableArr);
+
+
     })
     .catch(function (e) {
       res.send(e);
     });
 });
+
+
+
+// var orderArray = Object.values(list.reduce((result, {
+//   table,
+//   food_name,
+//   food_quantity,
+//   food_price,
+//   date,
+//   status,
+//   food_imagename
+// }) => {
+//   // Create new group
+//   if (!result[table]) result[table] = {
+//       table,
+//       items: []
+//   };
+//   // Append to group
+//   result[table].items.push({
+//     food_name,
+//     food_quantity,
+//     food_price,
+//     date,
+//     status,
+//     food_imagename
+//   });
+//   return result;
+// }, {}));
+
 
 //route for getting all orders of particular user
 router.get("/:table", function (req, res) {
