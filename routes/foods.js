@@ -41,9 +41,7 @@ router.post("/addFood", upload.single("food_image"), (req, res) => {
     food_type: req.body.food_type,
     food_price: req.body.food_price,
     food_description: req.body.food_description,
-    food_imagename: req.file.path,
-    food_rating: "",
-    food_offer: req.body.food_offer,
+    food_imagename: req.file.path
   });
   food
     .save()
@@ -150,9 +148,7 @@ router.put("/updateFood/:id", upload.single("food_image"), async function (
         food_type: req.body.food_type,
         food_price: req.body.food_price,
         food_description: req.body.food_description,
-        food_imagename: req.file.path,
-        food_rating: "",
-        food_offer: req.body.food_offer,
+        food_imagename: req.file.path
       },
     }
   )
