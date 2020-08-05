@@ -4,23 +4,24 @@ const Schema = mongoose.Schema;
 const basketSchema = new Schema(
   {
     table: {
-      type: String
+      type: String,
     },
     food_name: {
-      type: String
+      type: String,
     },
     food_price: {
-      type: String
+      type: Number,
     },
-    food_quantity:{
-      type:String
+    food_quantity: {
+      type: Number,
+      default: 1,
     },
-    food_imagename:{
-      type:String
-    }
+    food_imagename: {
+      type: String,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

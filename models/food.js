@@ -15,7 +15,7 @@ const foodSchema = new Schema(
       type: String,
     },
     food_price: {
-      type: String,
+      type: Number,
     },
     food_description: {
       type: String,

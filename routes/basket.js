@@ -4,7 +4,6 @@ const Basket = require("../models/basket");
 
 //route for adding to basket
 router.post("/", (req, res) => {
-  console.log(req.body);
   Basket.find({ table: req.body.table, food_name: req.body.food_name })
     .exec()
     .then((basket) => {
@@ -17,14 +16,13 @@ router.post("/", (req, res) => {
           table: req.body.table,
           food_name: req.body.food_name,
           food_price: req.body.food_price,
-          // food_quantity: req.body.food_quantity,
           food_imagename: req.body.food_imagename,
         });
         basket
           .save()
           .then((result) => {
             res.status(201).json({
-              message: "Food added to basket successfully",
+              message: "Food added to basket",
             });
           })
           .catch((err) => {
