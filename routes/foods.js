@@ -112,7 +112,6 @@ router.get("/food/:food_category", function (req, res) {
     });
 });
 
-//route for getting course by id
 router.get("/:id", function (req, res) {
   Food.findById(req.params.id)
 
