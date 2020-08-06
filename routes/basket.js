@@ -52,7 +52,9 @@ router.get("/:table", function (req, res) {
 router.delete("/removefrombasket/:id", (req, res) => {
   Basket.findByIdAndDelete(req.params.id)
     .then(function () {
-      res.send("Item removed!");
+      res.status(201).json({
+        message: "Item removed",
+      });
     })
     .catch(function (e) {
       res.send(e);
